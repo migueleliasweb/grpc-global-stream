@@ -6,15 +6,17 @@ option go_package = "./;main";
 
 // RPCs
 
-rpc Put (PutRequest) returns (PutResponse);
-rpc Get (GetRequest) returns (GetResponse);
-rpc Watch (WatchRequest) returns (WatchResponse);
+service API {
+    rpc Put (PutRequest) returns (PutResponse);
+    rpc Get (GetRequest) returns (GetResponse);
+    rpc Watch (WatchRequest) returns (WatchResponse);
+}
 
 // Data containers
 
 message Item {
-    Key string = 1;
-    Value string = 2;
+    string Key = 1;
+    string Value = 2;
 }
 
 // Messages
@@ -24,15 +26,15 @@ message PutRequest {
 }
 
 message GetRequest {
-    Key string = 1;
+    string Key = 1;
 }
 
 message WatchRequest {
-    Key string = 1;
-    Prefix string = 1;
+    string Key = 1;
+    string Prefix = 2;
 }
 
 message WatchResponse {
-    repeated Item = 1;
+    repeated Item Item = 1;
 }
 
