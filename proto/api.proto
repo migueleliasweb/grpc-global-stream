@@ -1,3 +1,5 @@
+// To generate code: protoc --go_out=paths=source_relative:. proto/api.proto
+
 syntax = "proto3";
 
 package api;
@@ -7,9 +9,9 @@ option go_package = "./;main";
 // RPCs
 
 service API {
-    rpc Put (PutRequest);
+    rpc Put (PutRequest) returns(PutResponse);
     rpc Get (GetRequest) returns (GetResponse);
-    rpc Watch (WatchRequest) returns (WatchResponse);
+    rpc Watch (stream WatchRequest) returns (stream WatchResponse);
 }
 
 // Data containers
@@ -19,11 +21,18 @@ message Item {
     string Value = 2;
 }
 
+message WatchConfig {
+    string Key = 1;
+    string Prefix = 2;
+}
+
 // Messages
 
 message PutRequest {
     Item Item = 1;
 }
+
+message PutResponse{}
 
 message GetRequest {
     string Key = 1;
@@ -34,8 +43,8 @@ message GetResponse {
 }
 
 message WatchRequest {
-    string Key = 1;
-    string Prefix = 2;
+    WatchConfig Add = 1;
+    WatchConfig Remove = 2;
 }
 
 message WatchResponse {
