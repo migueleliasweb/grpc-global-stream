@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "./;main";
+
+// RPCs
+
+rpc Put (PutRequest) returns (PutResponse);
+rpc Get (GetRequest) returns (GetResponse);
+rpc Watch (WatchRequest) returns (WatchResponse);
+
+// Data containers
+
+message Item {
+    Key string = 1;
+    Value string = 2;
+}
+
+// Messages
+
+message PutRequest {
+    Item Item = 1;
+}
+
+message GetRequest {
+    Key string = 1;
+}
+
+message WatchRequest {
+    Key string = 1;
+    Prefix string = 1;
+}
+
+message WatchResponse {
+    repeated Item = 1;
+}
+
